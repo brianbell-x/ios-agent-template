@@ -64,7 +64,16 @@ Why this default:
 Default retention:
 
 - backend session retrieval limit: `40`
-- iOS persisted transcript limit: `40`
+- iOS local transcript limit: `40`
+
+Ownership and precedence:
+
+- The backend session is the canonical memory used for agent runs. The client does not resend the full transcript on each turn.
+- `ChatLocalTranscriptLimit` is owned by iOS and bounds how much transcript the app will restore from disk or persist locally.
+- `session_history_limit` is owned by the backend and describes how much history the server session will retain for agent context.
+- After restore validation succeeds or a stream event reports `session_history_limit`, the client uses `min(localTranscriptLimit, sessionHistoryLimit)` for transcript restore and persistence.
+- If the app cannot verify the saved conversation with the backend, it restores the cached transcript with only the local limit applied and marks the conversation as unverified until the backend can confirm it.
+- The backend can reduce the effective local snapshot depth to match server memory, but it does not increase local retention beyond the iOS-configured cap.
 
 ## Streaming Strategy
 

@@ -50,8 +50,10 @@ Steps:
 
 Important defaults:
 
-- `CHAT_AGENT_SESSION_HISTORY_LIMIT=40` caps backend session retrieval
-- `ChatLocalTranscriptLimit=40` caps the persisted iOS transcript snapshot
+- `CHAT_AGENT_SESSION_HISTORY_LIMIT=40` caps backend session retrieval and is the server-owned limit for agent memory
+- `ChatLocalTranscriptLimit=40` caps the iOS app's local transcript cache and restore budget
+- Once the app has a backend-confirmed `session_history_limit`, local restore and persistence use `min(ChatLocalTranscriptLimit, session_history_limit)`
+- If restore verification is offline or otherwise unverified, the app falls back to `ChatLocalTranscriptLimit` until the backend confirms the session limit
 
 Health check:
 
@@ -82,6 +84,7 @@ Notes:
 - That works for simulator-based local development.
 - For a physical device, replace `ChatBackendBaseURL` with a reachable host IP or tunnel.
 - On launch, the app validates any restored `conversation_id` against the backend before reusing it.
+- The backend remains the source of truth for conversation memory; the local transcript is only a client-side recovery cache for the chat UI.
 
 ## Customizing Agents
 

@@ -20,8 +20,6 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ChatBackendBaseURL</key>
 	<string>http://127.0.0.1:8000</string>
-	<key>ChatDefaultAgentID</key>
-	<string>default</string>
 	<key>ChatLocalTranscriptLimit</key>
 	<integer>40</integer>
 	<key>LSRequiresIPhoneOS</key>

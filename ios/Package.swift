@@ -20,10 +20,25 @@ let package = Package(
                 "ChatStreamParser.swift",
             ]
         ),
+        .target(
+            name: "ChatSessionSupport",
+            path: ".",
+            sources: [
+                "ChatAgent/Chat/ChatModels.swift",
+                "ChatAgent/Chat/TranscriptStore.swift",
+                "ChatAgent/Chat/ChatSessionStore.swift",
+                "PackageSupport/ChatAPIClientProtocol.swift",
+            ]
+        ),
         .testTarget(
             name: "ChatStreamSupportTests",
             dependencies: ["ChatStreamSupport"],
             path: "Tests/ChatStreamSupportTests"
+        ),
+        .testTarget(
+            name: "ChatSessionSupportTests",
+            dependencies: ["ChatSessionSupport"],
+            path: "Tests/ChatSessionSupportTests"
         ),
     ]
 )

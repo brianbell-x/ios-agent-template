@@ -2,10 +2,10 @@ import Observation
 import SwiftUI
 
 struct ChatView: View {
-    @Bindable var store: ChatSessionStore
+    @Bindable var screen: ChatScreenModel
 
-    init(store: ChatSessionStore) {
-        self.store = store
+    init(screen: ChatScreenModel) {
+        self.screen = screen
     }
 
     var body: some View {
@@ -15,26 +15,26 @@ struct ChatView: View {
 
                 ScrollView {
                     LazyVStack(spacing: 18) {
-                        if store.messages.isEmpty {
+                        if screen.messages.isEmpty {
                             ChatEmptyState(
                                 suggestions: [
                                     "Help me plan a launch checklist",
                                     "Summarize a product idea with risks",
                                     "Draft a two-paragraph customer reply",
                                 ],
-                                onSelectSuggestion: store.useSuggestion
+                                onSelectSuggestion: screen.useSuggestion
                             )
                             .padding(.top, 24)
                         } else {
-                            ForEach(store.messages) { message in
+                            ForEach(screen.messages) { message in
                                 MessageBubble(message: message)
                                     .id(message.id)
                                     .transition(.move(edge: .bottom).combined(with: .opacity))
                             }
                         }
 
-                        if let inlineError = store.inlineError {
-                            ErrorCard(message: inlineError, retry: store.retryLastMessage)
+                        if let inlineError = screen.inlineError {
+                            ErrorCard(message: inlineError, retry: screen.retryLastMessage)
                                 .transition(.opacity)
                         }
                     }
@@ -49,39 +49,39 @@ struct ChatView: View {
                     VStack(spacing: 2) {
                         Text("Assistant")
                             .font(.system(.headline, design: .rounded, weight: .semibold))
-                        Text(store.statusCaption)
+                        Text(screen.statusCaption)
                             .font(.system(.caption, design: .rounded, weight: .medium))
                             .foregroundStyle(.secondary)
                     }
                 }
 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: store.startNewConversation) {
+                    Button(action: screen.startNewConversation) {
                         Image(systemName: "square.and.pencil")
                     }
-                    .disabled(store.isStreaming)
+                    .disabled(screen.isStreaming)
                 }
             }
             .safeAreaInset(edge: .bottom) {
                 ComposerBar(
-                    text: $store.composerText,
-                    isSending: store.isStreaming,
-                    canSend: store.canSendMessage,
-                    send: store.sendCurrentDraft
+                    text: $screen.composerText,
+                    isSending: screen.isStreaming,
+                    canSend: screen.canSendMessage,
+                    send: screen.sendCurrentDraft
                 )
                 .padding(.horizontal, 16)
                 .padding(.top, 10)
                 .padding(.bottom, 8)
                 .background(.thinMaterial)
             }
-            .onChange(of: store.scrollAnchorID) { _, newValue in
+            .onChange(of: screen.scrollAnchorID) { _, newValue in
                 guard let newValue else { return }
                 withAnimation(.snappy(duration: 0.28)) {
                     proxy.scrollTo(newValue, anchor: .bottom)
                 }
             }
-            .onChange(of: store.messages.last?.text) { _, _ in
-                guard let anchor = store.scrollAnchorID else { return }
+            .onChange(of: screen.messages.last?.text) { _, _ in
+                guard let anchor = screen.scrollAnchorID else { return }
                 withAnimation(.snappy(duration: 0.18)) {
                     proxy.scrollTo(anchor, anchor: .bottom)
                 }
@@ -298,20 +298,78 @@ private struct ChatBackground: View {
     }
 }
 
+private struct PreviewChatAPIClient: ChatAPIClient {
+    func conversationStatus(for conversationID: String) async throws -> ConversationStatusPayload {
+        ConversationStatusPayload(
+            conversationID: conversationID,
+            exists: true,
+            sessionHistoryLimit: 40
+        )
+    }
+
+    func streamReply(for request: BackendChatRequest) -> AsyncThrowingStream<ChatStreamEvent, Error> {
+        AsyncThrowingStream { continuation in
+            continuation.finish()
+        }
+    }
+}
+
+private extension ChatSessionStore {
+    static var previewConversation: ChatSessionStore {
+        let environment = AppEnvironment.nonProduction(client: PreviewChatAPIClient())
+        let store = ChatSessionStore(
+            client: environment.client,
+            transcriptStore: environment.transcriptStore,
+            backendBaseURL: environment.backendBaseURL,
+            localTranscriptLimit: environment.localTranscriptLimit
+        )
+        store.seedPreview(
+            conversationID: "preview-conversation",
+            activeAgentName: "Planning Specialist",
+            messages: [
+                ChatMessage(role: .assistant, text: "How can I help today?"),
+                ChatMessage(role: .user, text: "Give me a trip plan for two days in Chicago."),
+                ChatMessage(
+                    role: .assistant,
+                    text: "Day one: architecture river walk, West Loop lunch, museum campus in the afternoon. Day two: Logan Square coffee, neighborhood shopping, then a lakefront sunset.",
+                    state: .complete
+                ),
+            ]
+        )
+        return store
+    }
+
+    static var previewEmpty: ChatSessionStore {
+        let environment = AppEnvironment.nonProduction(client: PreviewChatAPIClient())
+        return ChatSessionStore(
+            client: environment.client,
+            transcriptStore: environment.transcriptStore,
+            backendBaseURL: environment.backendBaseURL,
+            localTranscriptLimit: environment.localTranscriptLimit
+        )
+    }
+
+    static var previewError: ChatSessionStore {
+        let store = previewConversation
+        store.screen.sendFailure = .transport(message: "The backend could not complete the request.")
+        return store
+    }
+}
+
 #Preview("Conversation") {
     NavigationStack {
-        ChatView(store: .previewConversation)
+        ChatView(screen: ChatSessionStore.previewConversation.screen)
     }
 }
 
 #Preview("Empty") {
     NavigationStack {
-        ChatView(store: .previewEmpty)
+        ChatView(screen: ChatSessionStore.previewEmpty.screen)
     }
 }
 
 #Preview("Error") {
     NavigationStack {
-        ChatView(store: .previewError)
+        ChatView(screen: ChatSessionStore.previewError.screen)
     }
 }
