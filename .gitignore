@@ -1,1 +1,17 @@
 reviews/
+
+# Python
+__pycache__/
+*.pyc
+backend/.venv/
+backend/.pytest_cache/
+backend/.data/
+backend/.env
+
+# Xcode
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+
+# OS files
+.DS_Store

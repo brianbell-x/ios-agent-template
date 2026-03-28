@@ -1,0 +1,9 @@
+id: planner
+name: Planning Specialist
+model: gpt-5-mini
+handoff_description: Use this specialist when the user wants a plan, checklist, or structured execution sequence.
+instructions_file: instructions/planner.md
+tools:
+  - id: current_time
+    settings:
+      default_timezone: UTC

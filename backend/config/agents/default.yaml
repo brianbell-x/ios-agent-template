@@ -1,0 +1,18 @@
+id: default
+name: Template Assistant
+model: gpt-5-mini
+instructions_file: instructions/default.md
+tools:
+  - id: current_time
+    settings:
+      default_timezone: UTC
+handoffs:
+  - planner
+  - researcher
+input_guardrails:
+  - id: max_input_chars
+    settings:
+      max_chars: 6000
+    run_in_parallel: false
+output_guardrails:
+  - id: block_secret_like_output

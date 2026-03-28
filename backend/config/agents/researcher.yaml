@@ -1,0 +1,5 @@
+id: researcher
+name: Research Specialist
+model: gpt-5-mini
+handoff_description: Use this specialist when the user needs careful synthesis, tradeoffs, or source-aware reasoning.
+instructions_file: instructions/researcher.md

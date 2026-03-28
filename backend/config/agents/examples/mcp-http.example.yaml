@@ -1,0 +1,13 @@
+id: docs-enabled
+name: Template Assistant With HTTP MCP
+model: gpt-5-mini
+instructions_file: instructions/default.md
+tools:
+  - id: current_time
+mcp_servers:
+  - name: local_docs
+    transport: streamable_http
+    url: http://127.0.0.1:9000/mcp
+    headers:
+      Authorization: Bearer replace-me
+    require_approval: never
