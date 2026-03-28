@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AE0000000000000000000001"
-               BuildableName = "ChatAgentTemplate.app"
-               BlueprintName = "ChatAgentTemplate"
-               ReferencedContainer = "container:ChatAgentTemplate.xcodeproj">
+               BuildableName = "ChatAgent.app"
+               BlueprintName = "ChatAgent"
+               ReferencedContainer = "container:ChatAgent.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AE0000000000000000000001"
-            BuildableName = "ChatAgentTemplate.app"
-            BlueprintName = "ChatAgentTemplate"
-            ReferencedContainer = "container:ChatAgentTemplate.xcodeproj">
+            BuildableName = "ChatAgent.app"
+            BlueprintName = "ChatAgent"
+            ReferencedContainer = "container:ChatAgent.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AE0000000000000000000001"
-            BuildableName = "ChatAgentTemplate.app"
-            BlueprintName = "ChatAgentTemplate"
-            ReferencedContainer = "container:ChatAgentTemplate.xcodeproj">
+            BuildableName = "ChatAgent.app"
+            BlueprintName = "ChatAgent"
+            ReferencedContainer = "container:ChatAgent.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

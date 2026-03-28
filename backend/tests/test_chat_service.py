@@ -28,7 +28,7 @@ class FakeRunner:
         return SimpleNamespace(
             final_output="Hello from the backend",
             last_response_id="resp_123",
-            last_agent=SimpleNamespace(name="Template Assistant"),
+            last_agent=SimpleNamespace(name="Assistant"),
         )
 
     def run_streamed(self, agent, input, *, session):

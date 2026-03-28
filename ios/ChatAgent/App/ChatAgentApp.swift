@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct ChatAgentTemplateApp: App {
+struct ChatAgentApp: App {
     private let environment = AppEnvironment.live()
 
     var body: some Scene {

@@ -1,6 +1,6 @@
-# iOS Chat Agent Template
+# iOS Chat Agent
 
-Reusable starter template for a polished iOS chat client backed by a configurable OpenAI Agents SDK service.
+Production-style iOS chat app backed by a configurable OpenAI Agents SDK service.
 
 ## What ships here
 
@@ -50,7 +50,7 @@ Steps:
 
 Important defaults:
 
-- `CHAT_TEMPLATE_SESSION_HISTORY_LIMIT=40` caps backend session retrieval
+- `CHAT_AGENT_SESSION_HISTORY_LIMIT=40` caps backend session retrieval
 - `ChatLocalTranscriptLimit=40` caps the persisted iOS transcript snapshot
 
 Health check:
@@ -70,12 +70,12 @@ Requirements:
 
 Steps:
 
-1. Open [ios/ChatAgentTemplate.xcodeproj](./ios/ChatAgentTemplate.xcodeproj)
-2. Select the `ChatAgentTemplate` scheme
+1. Open [ios/ChatAgent.xcodeproj](./ios/ChatAgent.xcodeproj)
+2. Select the `ChatAgent` scheme
 3. Update the bundle identifier and signing team
 4. Run the app in the simulator
 
-The default backend URL in [ios/ChatAgentTemplate/Info.plist](./ios/ChatAgentTemplate/Info.plist) is `http://127.0.0.1:8000`.
+The default backend URL in [ios/ChatAgent/Info.plist](./ios/ChatAgent/Info.plist) is `http://127.0.0.1:8000`.
 
 Notes:
 
@@ -149,5 +149,5 @@ Machine-checked macOS verification is included in:
 - The default session strategy is `SQLiteSession`, so the backend preserves turn state without asking the client to resend transcript history.
 - The backend validates agent configuration at startup and reuses the built agent graph across requests, including MCP connection scope.
 - The iOS app clears stale local transcript state if the backend cannot confirm the saved conversation still exists.
-- Guardrails ship as deterministic examples to keep the starter template cheap and legible.
+- Guardrails ship as deterministic examples to keep the system cheap and legible.
 - MCP support is implemented and documented, but disabled by default until a developer supplies a concrete server.

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA0000000000000000000001 /* ChatAgentTemplateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000001 /* ChatAgentTemplateApp.swift */; };
+		AA0000000000000000000001 /* ChatAgentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000001 /* ChatAgentApp.swift */; };
 		AA0000000000000000000002 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000002 /* AppEnvironment.swift */; };
 		AA0000000000000000000003 /* ChatModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000003 /* ChatModels.swift */; };
 		AA0000000000000000000004 /* ChatAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000004 /* ChatAPIClient.swift */; };
@@ -19,7 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AB0000000000000000000001 /* ChatAgentTemplateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAgentTemplateApp.swift; sourceTree = "<group>"; };
+		AB0000000000000000000001 /* ChatAgentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAgentApp.swift; sourceTree = "<group>"; };
 		AB0000000000000000000002 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		AB0000000000000000000003 /* ChatModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModels.swift; sourceTree = "<group>"; };
 		AB0000000000000000000004 /* ChatAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAPIClient.swift; sourceTree = "<group>"; };
@@ -28,7 +28,7 @@
 		AB0000000000000000000007 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		AB0000000000000000000008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB0000000000000000000009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AB0000000000000000000010 /* ChatAgentTemplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatAgentTemplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB0000000000000000000010 /* ChatAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB0000000000000000000011 /* ChatStreamParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStreamParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -46,12 +46,12 @@
 		AD0000000000000000000001 = {
 			isa = PBXGroup;
 			children = (
-				AD0000000000000000000002 /* ChatAgentTemplate */,
+				AD0000000000000000000002 /* ChatAgent */,
 				AD0000000000000000000006 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		AD0000000000000000000002 /* ChatAgentTemplate */ = {
+		AD0000000000000000000002 /* ChatAgent */ = {
 			isa = PBXGroup;
 			children = (
 				AD0000000000000000000003 /* App */,
@@ -59,14 +59,14 @@
 				AD0000000000000000000005 /* Resources */,
 				AB0000000000000000000009 /* Info.plist */,
 			);
-			path = ChatAgentTemplate;
+			path = ChatAgent;
 			sourceTree = "<group>";
 		};
 		AD0000000000000000000003 /* App */ = {
 			isa = PBXGroup;
 			children = (
 				AB0000000000000000000002 /* AppEnvironment.swift */,
-				AB0000000000000000000001 /* ChatAgentTemplateApp.swift */,
+				AB0000000000000000000001 /* ChatAgentApp.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -95,7 +95,7 @@
 		AD0000000000000000000006 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AB0000000000000000000010 /* ChatAgentTemplate.app */,
+				AB0000000000000000000010 /* ChatAgent.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,9 +103,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AE0000000000000000000001 /* ChatAgentTemplate */ = {
+		AE0000000000000000000001 /* ChatAgent */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AF1000000000000000000002 /* Build configuration list for PBXNativeTarget "ChatAgentTemplate" */;
+			buildConfigurationList = AF1000000000000000000002 /* Build configuration list for PBXNativeTarget "ChatAgent" */;
 			buildPhases = (
 				AC0000000000000000000002 /* Sources */,
 				AC0000000000000000000001 /* Frameworks */,
@@ -115,9 +115,9 @@
 			);
 			dependencies = (
 			);
-			name = ChatAgentTemplate;
-			productName = ChatAgentTemplate;
-			productReference = AB0000000000000000000010 /* ChatAgentTemplate.app */;
+			name = ChatAgent;
+			productName = ChatAgent;
+			productReference = AB0000000000000000000010 /* ChatAgent.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -134,7 +134,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AF1000000000000000000001 /* Build configuration list for PBXProject "ChatAgentTemplate" */;
+			buildConfigurationList = AF1000000000000000000001 /* Build configuration list for PBXProject "ChatAgent" */;
 			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -147,7 +147,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AE0000000000000000000001 /* ChatAgentTemplate */,
+				AE0000000000000000000001 /* ChatAgent */,
 			);
 		};
 /* End PBXProject section */
@@ -169,7 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA0000000000000000000002 /* AppEnvironment.swift in Sources */,
-				AA0000000000000000000001 /* ChatAgentTemplateApp.swift in Sources */,
+				AA0000000000000000000001 /* ChatAgentApp.swift in Sources */,
 				AA0000000000000000000003 /* ChatModels.swift in Sources */,
 				AA0000000000000000000004 /* ChatAPIClient.swift in Sources */,
 				AA0000000000000000000009 /* ChatStreamParser.swift in Sources */,
@@ -224,14 +224,14 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = ChatAgentTemplate/Info.plist;
+				INFOPLIST_FILE = ChatAgent/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ChatAgentTemplate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.chatagent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -250,14 +250,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = ChatAgentTemplate/Info.plist;
+				INFOPLIST_FILE = ChatAgent/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ChatAgentTemplate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.chatagent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -270,7 +270,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AF1000000000000000000001 /* Build configuration list for PBXProject "ChatAgentTemplate" */ = {
+		AF1000000000000000000001 /* Build configuration list for PBXProject "ChatAgent" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AF0000000000000000000003 /* Debug */,
@@ -279,7 +279,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AF1000000000000000000002 /* Build configuration list for PBXNativeTarget "ChatAgentTemplate" */ = {
+		AF1000000000000000000002 /* Build configuration list for PBXNativeTarget "ChatAgent" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AF0000000000000000000005 /* Debug */,

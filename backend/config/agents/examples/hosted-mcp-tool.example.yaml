@@ -1,5 +1,5 @@
-id: hosted-mcp-template
-name: Template Assistant With Hosted MCP Tool
+id: hosted-mcp-assistant
+name: Hosted MCP Assistant
 model: gpt-5-mini
 instructions_file: instructions/default.md
 hosted_mcp_tools:

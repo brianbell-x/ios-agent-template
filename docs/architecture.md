@@ -52,7 +52,7 @@ Startup behavior:
 
 ## Session Strategy
 
-The template uses `SQLiteSession` from the Agents SDK and keys each server-side conversation by `conversation_id`.
+The backend uses `SQLiteSession` from the Agents SDK and keys each server-side conversation by `conversation_id`.
 
 Why this default:
 
@@ -86,5 +86,5 @@ The client validates restored `conversation_id` values against `GET /api/convers
 
 - The backend is fully runnable and tested in this environment; the iOS project is scaffolded and documented but not compiled here because Xcode and the Apple toolchain are unavailable on Windows.
 - A macOS CI workflow now runs `swift test --package-path ios` for the stream parser and an `xcodebuild` smoke build for the hand-authored Xcode project.
-- Guardrails ship as deterministic examples rather than LLM-based moderation flows. That keeps the template cheap, legible, and easy to extend.
+- Guardrails ship as deterministic examples rather than LLM-based moderation flows. That keeps the system cheap, legible, and easy to extend.
 - MCP support is implemented in the backend runtime and documented with examples, but no MCP server is enabled by default.

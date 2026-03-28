@@ -19,9 +19,11 @@ def configure_openai(settings: Settings) -> None:
     if settings.openai_api_shape == "chat_completions":
         set_default_openai_api("chat_completions")
 
-    api_key = os.environ.get("OPENAI_API_KEY")
-    if api_key:
-        set_default_openai_key(api_key)
+    if settings.disable_tracing:
+        os.environ["OPENAI_AGENTS_DISABLE_TRACING"] = "1"
+
+    if settings.openai_api_key:
+        set_default_openai_key(settings.openai_api_key)
 
 
 @asynccontextmanager

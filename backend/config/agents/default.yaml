@@ -1,5 +1,5 @@
 id: default
-name: Template Assistant
+name: Assistant
 model: gpt-5-mini
 instructions_file: instructions/default.md
 tools:

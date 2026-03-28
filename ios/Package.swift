@@ -14,7 +14,7 @@ let package = Package(
     targets: [
         .target(
             name: "ChatStreamSupport",
-            path: "ChatAgentTemplate/Chat",
+            path: "ChatAgent/Chat",
             sources: [
                 "ChatModels.swift",
                 "ChatStreamParser.swift",

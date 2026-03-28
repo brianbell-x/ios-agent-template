@@ -425,7 +425,7 @@ wheels = [
 ]
 
 [[package]]
-name = "ios-chat-agent-template-backend"
+name = "ios-chat-agent-backend"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

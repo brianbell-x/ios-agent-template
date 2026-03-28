@@ -1,6 +1,6 @@
 # Backend
 
-FastAPI backend for the iOS chat agent template.
+FastAPI backend for the iOS chat agent app.
 
 It exposes:
 

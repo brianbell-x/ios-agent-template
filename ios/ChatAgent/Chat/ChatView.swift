@@ -207,7 +207,7 @@ private struct ChatEmptyState: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Start a focused conversation")
                     .font(.system(size: 30, weight: .semibold, design: .rounded))
-                Text("This template keeps the UI narrow: one transcript, one composer, and a backend that owns the agent behavior.")
+                Text("This app keeps the UI focused: one transcript, one composer, and a backend that owns agent behavior.")
                     .font(.system(.body, design: .rounded))
                     .foregroundStyle(.secondary)
             }

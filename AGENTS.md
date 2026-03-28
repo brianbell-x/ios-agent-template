@@ -1,15 +1,15 @@
-# iOS Chat Agent Template
+# iOS Chat Agent
 
 ## Objective
 
-Build a production-ready template for an iOS app that provides a clean ChatGPT-like chat experience on the frontend and uses the OpenAI Agents SDK on the backend.
+Build a production-ready iOS app that provides a clean ChatGPT-like chat experience on the frontend and uses the OpenAI Agents SDK on the backend.
 
-This repository may start nearly empty. Create whatever project structure, app code, backend code, configuration, scripts, and documentation are required to finish the template end to end.
+This repository may start nearly empty. Create whatever project structure, app code, backend code, configuration, scripts, and documentation are required to finish the app end to end.
 If the repository is not already a git repository, initialize it before milestone commits begin.
 
 ## Product Definition
 
-The product is a reusable starter template, not a one-off demo.
+The product is a reusable app foundation, not a one-off demo.
 
 It must provide:
 
@@ -36,7 +36,7 @@ It must provide:
   - message composer
   - streaming or incremental assistant responses if practical
   - loading, error, and retry states
-  - basic conversation history handling if it materially improves the template
+  - basic conversation history handling if it materially improves the app
 - Do not add product ideas that turn this into a different app. No agent builder UI, no complex settings surface, no admin console, no workflow editor unless it is essential for local development or validation.
 - Frontend customization is not the goal. The frontend should stay generic and chat-focused.
 
@@ -99,7 +99,7 @@ It must provide:
 - Keep naming direct and unsurprising.
 - Add comments only where they save real reader effort.
 - Remove dead code and avoid placeholder complexity.
-- Include enough setup and documentation that another engineer can run the template without reverse engineering the repo.
+- Include enough setup and documentation that another engineer can run the app without reverse engineering the repo.
 
 ## Workflow Expectations
 
@@ -115,20 +115,20 @@ It must provide:
 
 The task is complete when all of the following are true:
 
-- There is a working iOS app template with a high-quality chat-first interface.
+- There is a working iOS app with a high-quality chat-first interface.
 - There is a working backend integrated with the OpenAI Agents SDK.
 - The iOS app can send messages to the backend and receive agent responses.
 - The backend is structured for real agent customization, not a narrow demo path.
 - The project is understandable from the repository layout and documentation.
 - Setup and run instructions are present.
-- Environment configuration examples or templates are present.
+- Environment configuration examples are present.
 - There is at least a basic verification path such as smoke tests, manual test steps, or scripted checks for critical flows.
 - Important assumptions and tradeoffs are documented.
 - The implementation is maintainable and free of unnecessary complexity.
 
 ## Non-Goals
 
-Unless required to make the template functional, do not spend time on:
+Unless required to make the app functional, do not spend time on:
 
 - feature bloat
 - experimental architecture
@@ -149,4 +149,4 @@ Use relevant skills and tools when they materially improve the result, especiall
 
 ## Final Standard
 
-Deliver a template that feels like a real starting point for a serious app: minimal, polished, extensible, and ready for another engineer to pick up without confusion.
+Deliver an app that feels like a real starting point for a serious product: minimal, polished, extensible, and ready for another engineer to pick up without confusion.

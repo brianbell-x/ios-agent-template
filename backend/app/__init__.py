@@ -1,1 +1,1 @@
-"""Backend package for the iOS chat agent template."""
+"""Backend package for the iOS chat agent app."""

@@ -17,7 +17,7 @@ final class ChatSessionStore {
     private let transcriptStore: TranscriptStore
     private let backendBaseURL: URL
     private let defaultAgentID: String
-    private let logger = Logger(subsystem: "ChatAgentTemplate", category: "ChatSessionStore")
+    private let logger = Logger(subsystem: "com.example.chatagent", category: "ChatSessionStore")
     private var sendTask: Task<Void, Never>?
     private var persistenceTask: Task<Void, Never>?
     private var pendingRetryMessage: String?

@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "iOS Chat Agent Template Backend",
+    "title": "Chat Agent Backend",
     "version": "0.1.0"
   },
   "paths": {

@@ -21,7 +21,7 @@ jobs:
       - name: Smoke Build App
         run: >
           xcodebuild
-          -project ios/ChatAgentTemplate.xcodeproj
-          -scheme ChatAgentTemplate
+          -project ios/ChatAgent.xcodeproj
+          -scheme ChatAgent
           -destination 'generic/platform=iOS Simulator'
           build
