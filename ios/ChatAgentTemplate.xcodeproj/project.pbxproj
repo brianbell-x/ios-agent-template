@@ -1,0 +1,290 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA0000000000000000000001 /* ChatAgentTemplateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000001 /* ChatAgentTemplateApp.swift */; };
+		AA0000000000000000000002 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000002 /* AppEnvironment.swift */; };
+		AA0000000000000000000003 /* ChatModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000003 /* ChatModels.swift */; };
+		AA0000000000000000000004 /* ChatAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000004 /* ChatAPIClient.swift */; };
+		AA0000000000000000000005 /* TranscriptStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000005 /* TranscriptStore.swift */; };
+		AA0000000000000000000006 /* ChatSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000006 /* ChatSessionStore.swift */; };
+		AA0000000000000000000007 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000007 /* ChatView.swift */; };
+		AA0000000000000000000008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000008 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AB0000000000000000000001 /* ChatAgentTemplateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAgentTemplateApp.swift; sourceTree = "<group>"; };
+		AB0000000000000000000002 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		AB0000000000000000000003 /* ChatModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModels.swift; sourceTree = "<group>"; };
+		AB0000000000000000000004 /* ChatAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAPIClient.swift; sourceTree = "<group>"; };
+		AB0000000000000000000005 /* TranscriptStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptStore.swift; sourceTree = "<group>"; };
+		AB0000000000000000000006 /* ChatSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSessionStore.swift; sourceTree = "<group>"; };
+		AB0000000000000000000007 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		AB0000000000000000000008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AB0000000000000000000009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB0000000000000000000010 /* ChatAgentTemplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatAgentTemplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AC0000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD0000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				AD0000000000000000000002 /* ChatAgentTemplate */,
+				AD0000000000000000000006 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AD0000000000000000000002 /* ChatAgentTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				AD0000000000000000000003 /* App */,
+				AD0000000000000000000004 /* Chat */,
+				AD0000000000000000000005 /* Resources */,
+				AB0000000000000000000009 /* Info.plist */,
+			);
+			path = ChatAgentTemplate;
+			sourceTree = "<group>";
+		};
+		AD0000000000000000000003 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				AB0000000000000000000002 /* AppEnvironment.swift */,
+				AB0000000000000000000001 /* ChatAgentTemplateApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		AD0000000000000000000004 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				AB0000000000000000000003 /* ChatModels.swift */,
+				AB0000000000000000000004 /* ChatAPIClient.swift */,
+				AB0000000000000000000005 /* TranscriptStore.swift */,
+				AB0000000000000000000006 /* ChatSessionStore.swift */,
+				AB0000000000000000000007 /* ChatView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		AD0000000000000000000005 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AB0000000000000000000008 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AD0000000000000000000006 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB0000000000000000000010 /* ChatAgentTemplate.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AE0000000000000000000001 /* ChatAgentTemplate */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF1000000000000000000002 /* Build configuration list for PBXNativeTarget "ChatAgentTemplate" */;
+			buildPhases = (
+				AC0000000000000000000002 /* Sources */,
+				AC0000000000000000000001 /* Frameworks */,
+				AC0000000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChatAgentTemplate;
+			productName = ChatAgentTemplate;
+			productReference = AB0000000000000000000010 /* ChatAgentTemplate.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AF0000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					AE0000000000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = AF1000000000000000000001 /* Build configuration list for PBXProject "ChatAgentTemplate" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AD0000000000000000000001;
+			productRefGroup = AD0000000000000000000006 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AE0000000000000000000001 /* ChatAgentTemplate */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AC0000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0000000000000000000008 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AC0000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0000000000000000000002 /* AppEnvironment.swift in Sources */,
+				AA0000000000000000000001 /* ChatAgentTemplateApp.swift in Sources */,
+				AA0000000000000000000003 /* ChatModels.swift in Sources */,
+				AA0000000000000000000004 /* ChatAPIClient.swift in Sources */,
+				AA0000000000000000000005 /* TranscriptStore.swift in Sources */,
+				AA0000000000000000000006 /* ChatSessionStore.swift in Sources */,
+				AA0000000000000000000007 /* ChatView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AF0000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		AF0000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		AF0000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChatAgentTemplate/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.ChatAgentTemplate;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AF0000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChatAgentTemplate/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.ChatAgentTemplate;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AF1000000000000000000001 /* Build configuration list for PBXProject "ChatAgentTemplate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF0000000000000000000003 /* Debug */,
+				AF0000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AF1000000000000000000002 /* Build configuration list for PBXNativeTarget "ChatAgentTemplate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF0000000000000000000005 /* Debug */,
+				AF0000000000000000000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AF0000000000000000000001 /* Project object */;
+}
