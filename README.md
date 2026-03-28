@@ -39,7 +39,7 @@ Requirements:
 Steps:
 
 1. `cd backend`
-2. `Copy-Item .env.example .env`
+2. `cp .env.example .env`
 3. Fill in `OPENAI_API_KEY` in `backend/.env`
 4. `uv sync --extra dev`
 5. `uv run uvicorn app.main:app --reload`
@@ -104,7 +104,7 @@ Completed in this environment:
 
 - `uv sync --extra dev`
 - `uv run pytest`
-- `python scripts/export_openapi.py`
+- `uv run python scripts/export_openapi.py`
 - direct constructor validation for SDK MCP server adapters
 
 Not completed in this environment:
