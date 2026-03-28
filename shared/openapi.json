@@ -26,6 +26,48 @@
         }
       }
     },
+    "/api/conversations/{conversation_id}": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Get Conversation Status",
+        "operationId": "get_conversation_status_api_conversations__conversation_id__get",
+        "parameters": [
+          {
+            "name": "conversation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Conversation Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationStatusResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/chat": {
       "post": {
         "tags": [
@@ -110,6 +152,9 @@
             "content": {
               "application/json": {
                 "schema": {}
+              },
+              "text/event-stream": {
+                "example": "event: conversation.started\ndata: {\"conversation_id\": \"demo-conversation\", \"agent_id\": \"default\", \"session_history_limit\": 40}\n\nevent: message.delta\ndata: {\"delta\": \"Hello\"}\n\nevent: agent.updated\ndata: {\"agent_name\": \"Planning Specialist\"}\n\nevent: run.item\ndata: {\"name\": \"tool_called\", \"item_type\": \"tool_call_item\"}\n\nevent: message.completed\ndata: {\"conversation_id\": \"demo-conversation\", \"agent_id\": \"default\", \"final_agent_name\": \"Planning Specialist\", \"response_id\": \"resp_demo_123\", \"content\": \"Hello streamed\", \"session_history_limit\": 40}\n\nevent: done\ndata: {}\n\n"
               }
             }
           },
@@ -223,6 +268,29 @@
         ],
         "title": "ChatMessagePayload"
       },
+      "ConversationStatusResponse": {
+        "properties": {
+          "conversation_id": {
+            "type": "string",
+            "title": "Conversation Id"
+          },
+          "exists": {
+            "type": "boolean",
+            "title": "Exists"
+          },
+          "session_history_limit": {
+            "type": "integer",
+            "title": "Session History Limit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "conversation_id",
+          "exists",
+          "session_history_limit"
+        ],
+        "title": "ConversationStatusResponse"
+      },
       "ErrorPayload": {
         "properties": {
           "code": {
@@ -288,12 +356,30 @@
           "default_agent_id": {
             "type": "string",
             "title": "Default Agent Id"
+          },
+          "available_agent_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Available Agent Ids"
+          },
+          "session_history_limit": {
+            "type": "integer",
+            "title": "Session History Limit"
+          },
+          "agent_config_version": {
+            "type": "string",
+            "title": "Agent Config Version"
           }
         },
         "type": "object",
         "required": [
           "status",
-          "default_agent_id"
+          "default_agent_id",
+          "available_agent_ids",
+          "session_history_limit",
+          "agent_config_version"
         ],
         "title": "HealthResponse"
       },

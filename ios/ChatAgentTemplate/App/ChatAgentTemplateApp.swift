@@ -20,7 +20,8 @@ private struct RootScene: View {
                 client: environment.client,
                 transcriptStore: environment.transcriptStore,
                 backendBaseURL: environment.backendBaseURL,
-                defaultAgentID: environment.defaultAgentID
+                defaultAgentID: environment.defaultAgentID,
+                localTranscriptLimit: environment.localTranscriptLimit
             )
         )
     }

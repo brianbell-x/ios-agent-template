@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     openai_api_shape: str = Field(default="responses")
     agents_config_dir: Path = Field(default=BACKEND_DIR / "config" / "agents")
     sessions_db_path: Path = Field(default=BACKEND_DIR / ".data" / "agent_sessions.sqlite3")
+    session_history_limit: int = 40
 
     def ensure_runtime_directories(self) -> None:
         self.sessions_db_path.parent.mkdir(parents=True, exist_ok=True)

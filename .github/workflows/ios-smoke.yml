@@ -1,0 +1,27 @@
+name: iOS Smoke
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  ios-smoke:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Run Parser Tests
+        run: swift test --package-path ios
+
+      - name: Smoke Build App
+        run: >
+          xcodebuild
+          -project ios/ChatAgentTemplate.xcodeproj
+          -scheme ChatAgentTemplate
+          -destination 'generic/platform=iOS Simulator'
+          build

@@ -139,6 +139,18 @@ class ExtensionRegistry:
             "block_secret_like_output": build_secret_output_guardrail,
         }
 
+    @property
+    def tool_ids(self) -> set[str]:
+        return set(self._tool_factories)
+
+    @property
+    def input_guardrail_ids(self) -> set[str]:
+        return set(self._input_guardrail_factories)
+
+    @property
+    def output_guardrail_ids(self) -> set[str]:
+        return set(self._output_guardrail_factories)
+
     def build_tool(self, spec: ToolReference) -> Any:
         factory = self._tool_factories[spec.id]
         return factory(spec, self._context)

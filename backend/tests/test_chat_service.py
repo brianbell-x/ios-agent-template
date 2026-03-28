@@ -9,6 +9,20 @@ from app.agents.service import ChatService
 from app.schemas.chat import ChatCompletionRequest
 
 
+class FakeSessionFactory:
+    def __init__(self, *, history_limit: int = 40, existing_conversation_ids: set[str] | None = None):
+        self.history_limit = history_limit
+        self.existing_conversation_ids = existing_conversation_ids or set()
+        self.created_conversation_ids: list[str] = []
+
+    def create(self, conversation_id: str):
+        self.created_conversation_ids.append(conversation_id)
+        return SimpleNamespace(conversation_id=conversation_id)
+
+    async def conversation_exists(self, conversation_id: str) -> bool:
+        return conversation_id in self.existing_conversation_ids
+
+
 class FakeRunner:
     async def run(self, agent, input, *, session):
         return SimpleNamespace(
@@ -52,7 +66,12 @@ class FakeStreamingResult:
 
 @pytest.mark.asyncio
 async def test_chat_service_creates_response(settings, agent_factory) -> None:
-    service = ChatService(settings=settings, agent_factory=agent_factory, runner=FakeRunner())
+    service = ChatService(
+        settings=settings,
+        agent_factory=agent_factory,
+        session_factory=FakeSessionFactory(),
+        runner=FakeRunner(),
+    )
 
     response = await service.respond(ChatCompletionRequest(message="Hello"))
 
@@ -63,7 +82,12 @@ async def test_chat_service_creates_response(settings, agent_factory) -> None:
 
 @pytest.mark.asyncio
 async def test_chat_service_streams_deltas(settings, agent_factory) -> None:
-    service = ChatService(settings=settings, agent_factory=agent_factory, runner=FakeRunner())
+    service = ChatService(
+        settings=settings,
+        agent_factory=agent_factory,
+        session_factory=FakeSessionFactory(history_limit=25),
+        runner=FakeRunner(),
+    )
 
     envelopes = [
         envelope
@@ -78,5 +102,25 @@ async def test_chat_service_streams_deltas(settings, agent_factory) -> None:
         "message.completed",
         "done",
     ]
+    assert envelopes[0].data["session_history_limit"] == 25
     assert envelopes[1].data["delta"] == "Hello"
     assert envelopes[4].data["content"] == "Hello streamed"
+    assert envelopes[4].data["session_history_limit"] == 25
+
+
+@pytest.mark.asyncio
+async def test_chat_service_reports_conversation_status(settings, agent_factory) -> None:
+    service = ChatService(
+        settings=settings,
+        agent_factory=agent_factory,
+        session_factory=FakeSessionFactory(
+            history_limit=12,
+            existing_conversation_ids={"existing-conversation"},
+        ),
+        runner=FakeRunner(),
+    )
+
+    status = await service.conversation_status("existing-conversation")
+
+    assert status.exists is True
+    assert status.session_history_limit == 12

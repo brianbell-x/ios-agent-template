@@ -1,0 +1,18 @@
+event: conversation.started
+data: {"conversation_id": "demo-conversation", "agent_id": "default", "session_history_limit": 40}
+
+event: message.delta
+data: {"delta": "Hello"}
+
+event: agent.updated
+data: {"agent_name": "Planning Specialist"}
+
+event: run.item
+data: {"name": "tool_called", "item_type": "tool_call_item"}
+
+event: message.completed
+data: {"conversation_id": "demo-conversation", "agent_id": "default", "final_agent_name": "Planning Specialist", "response_id": "resp_demo_123", "content": "Hello streamed", "session_history_limit": 40}
+
+event: done
+data: {}
+

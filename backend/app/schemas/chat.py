@@ -37,3 +37,45 @@ class ErrorResponse(BaseModel):
 class HealthResponse(BaseModel):
     status: Literal["ok"]
     default_agent_id: str
+    available_agent_ids: list[str]
+    session_history_limit: int
+    agent_config_version: str
+
+
+class ConversationStatusResponse(BaseModel):
+    conversation_id: str
+    exists: bool
+    session_history_limit: int
+
+
+class ConversationStartedEventData(BaseModel):
+    conversation_id: str
+    agent_id: str
+    session_history_limit: int
+
+
+class MessageDeltaEventData(BaseModel):
+    delta: str
+
+
+class AgentUpdatedEventData(BaseModel):
+    agent_name: str
+
+
+class RunItemEventData(BaseModel):
+    name: str
+    item_type: str
+
+
+class MessageCompletedEventData(BaseModel):
+    conversation_id: str
+    agent_id: str
+    final_agent_name: str
+    response_id: str | None = None
+    content: str
+    session_history_limit: int
+
+
+class StreamErrorPayload(BaseModel):
+    code: str
+    message: str

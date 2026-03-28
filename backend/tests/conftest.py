@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
+import pytest_asyncio
 
 from app.agents.builder import AgentFactory
 from app.agents.catalog import AgentCatalog
@@ -29,6 +30,11 @@ def registry(settings: Settings) -> ExtensionRegistry:
     return ExtensionRegistry(settings)
 
 
-@pytest.fixture
-def agent_factory(settings: Settings, catalog: AgentCatalog, registry: ExtensionRegistry) -> AgentFactory:
-    return AgentFactory(settings=settings, catalog=catalog, registry=registry)
+@pytest_asyncio.fixture
+async def agent_factory(settings: Settings, catalog: AgentCatalog, registry: ExtensionRegistry) -> AgentFactory:
+    factory = AgentFactory(settings=settings, catalog=catalog, registry=registry)
+    await factory.start()
+    try:
+        yield factory
+    finally:
+        await factory.close()

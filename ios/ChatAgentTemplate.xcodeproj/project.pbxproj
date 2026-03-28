@@ -15,6 +15,7 @@
 		AA0000000000000000000006 /* ChatSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000006 /* ChatSessionStore.swift */; };
 		AA0000000000000000000007 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000007 /* ChatView.swift */; };
 		AA0000000000000000000008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000008 /* Assets.xcassets */; };
+		AA0000000000000000000009 /* ChatStreamParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000011 /* ChatStreamParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		AB0000000000000000000008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB0000000000000000000009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB0000000000000000000010 /* ChatAgentTemplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatAgentTemplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB0000000000000000000011 /* ChatStreamParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStreamParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			children = (
 				AB0000000000000000000003 /* ChatModels.swift */,
 				AB0000000000000000000004 /* ChatAPIClient.swift */,
+				AB0000000000000000000011 /* ChatStreamParser.swift */,
 				AB0000000000000000000005 /* TranscriptStore.swift */,
 				AB0000000000000000000006 /* ChatSessionStore.swift */,
 				AB0000000000000000000007 /* ChatView.swift */,
@@ -169,6 +172,7 @@
 				AA0000000000000000000001 /* ChatAgentTemplateApp.swift in Sources */,
 				AA0000000000000000000003 /* ChatModels.swift in Sources */,
 				AA0000000000000000000004 /* ChatAPIClient.swift in Sources */,
+				AA0000000000000000000009 /* ChatStreamParser.swift in Sources */,
 				AA0000000000000000000005 /* TranscriptStore.swift in Sources */,
 				AA0000000000000000000006 /* ChatSessionStore.swift in Sources */,
 				AA0000000000000000000007 /* ChatView.swift in Sources */,

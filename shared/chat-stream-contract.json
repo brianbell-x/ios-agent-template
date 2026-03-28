@@ -1,0 +1,185 @@
+{
+  "content_type": "text/event-stream",
+  "events": {
+    "conversation.started": {
+      "properties": {
+        "conversation_id": {
+          "title": "Conversation Id",
+          "type": "string"
+        },
+        "agent_id": {
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "session_history_limit": {
+          "title": "Session History Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "conversation_id",
+        "agent_id",
+        "session_history_limit"
+      ],
+      "title": "ConversationStartedEventData",
+      "type": "object"
+    },
+    "message.delta": {
+      "properties": {
+        "delta": {
+          "title": "Delta",
+          "type": "string"
+        }
+      },
+      "required": [
+        "delta"
+      ],
+      "title": "MessageDeltaEventData",
+      "type": "object"
+    },
+    "agent.updated": {
+      "properties": {
+        "agent_name": {
+          "title": "Agent Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent_name"
+      ],
+      "title": "AgentUpdatedEventData",
+      "type": "object"
+    },
+    "run.item": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "item_type": {
+          "title": "Item Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "item_type"
+      ],
+      "title": "RunItemEventData",
+      "type": "object"
+    },
+    "message.completed": {
+      "properties": {
+        "conversation_id": {
+          "title": "Conversation Id",
+          "type": "string"
+        },
+        "agent_id": {
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "final_agent_name": {
+          "title": "Final Agent Name",
+          "type": "string"
+        },
+        "response_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Response Id"
+        },
+        "content": {
+          "title": "Content",
+          "type": "string"
+        },
+        "session_history_limit": {
+          "title": "Session History Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "conversation_id",
+        "agent_id",
+        "final_agent_name",
+        "content",
+        "session_history_limit"
+      ],
+      "title": "MessageCompletedEventData",
+      "type": "object"
+    },
+    "error": {
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "StreamErrorPayload",
+      "type": "object"
+    },
+    "done": {
+      "title": "DoneEventData",
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  "example_sequence": [
+    {
+      "event": "conversation.started",
+      "data": {
+        "conversation_id": "demo-conversation",
+        "agent_id": "default",
+        "session_history_limit": 40
+      }
+    },
+    {
+      "event": "message.delta",
+      "data": {
+        "delta": "Hello"
+      }
+    },
+    {
+      "event": "agent.updated",
+      "data": {
+        "agent_name": "Planning Specialist"
+      }
+    },
+    {
+      "event": "run.item",
+      "data": {
+        "name": "tool_called",
+        "item_type": "tool_call_item"
+      }
+    },
+    {
+      "event": "message.completed",
+      "data": {
+        "conversation_id": "demo-conversation",
+        "agent_id": "default",
+        "final_agent_name": "Planning Specialist",
+        "response_id": "resp_demo_123",
+        "content": "Hello streamed",
+        "session_history_limit": 40
+      }
+    },
+    {
+      "event": "done",
+      "data": {}
+    }
+  ]
+}

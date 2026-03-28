@@ -12,6 +12,7 @@ from app.agents.extensions import ExtensionRegistry
 from app.agents.service import ChatService
 from app.api.routes_chat import router as chat_router
 from app.core.config import Settings, get_settings
+from app.sessions import SessionFactory
 
 
 def configure_openai(settings: Settings) -> None:
@@ -32,11 +33,20 @@ async def lifespan(app: FastAPI):
     catalog = AgentCatalog(settings.agents_config_dir)
     registry = ExtensionRegistry(settings)
     agent_factory = AgentFactory(settings=settings, catalog=catalog, registry=registry)
-    chat_service = ChatService(settings=settings, agent_factory=agent_factory)
+    await agent_factory.start()
+    session_factory = SessionFactory(settings)
+    chat_service = ChatService(
+        settings=settings,
+        agent_factory=agent_factory,
+        session_factory=session_factory,
+    )
 
     app.state.settings = settings
     app.state.chat_service = chat_service
-    yield
+    try:
+        yield
+    finally:
+        await agent_factory.close()
 
 
 def create_app() -> FastAPI:

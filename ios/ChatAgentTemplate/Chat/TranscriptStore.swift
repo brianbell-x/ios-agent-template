@@ -2,6 +2,7 @@ import Foundation
 
 actor TranscriptStore {
     private let fileURL: URL?
+    private var newestRevision = 0
 
     init(fileURL: URL?) {
         self.fileURL = fileURL
@@ -38,6 +39,17 @@ actor TranscriptStore {
         guard let fileURL else { return }
         if FileManager.default.fileExists(atPath: fileURL.path()) {
             try FileManager.default.removeItem(at: fileURL)
+        }
+    }
+
+    func replace(snapshot: ConversationSnapshot?, revision: Int) throws {
+        guard revision >= newestRevision else { return }
+        newestRevision = revision
+
+        if let snapshot {
+            try save(snapshot)
+        } else {
+            try clear()
         }
     }
 }

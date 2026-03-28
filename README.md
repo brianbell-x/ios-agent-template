@@ -7,6 +7,7 @@ Reusable starter template for a polished iOS chat client backed by a configurabl
 - `ios/`: a SwiftUI iOS app with a transcript-first chat interface, bottom composer, streaming assistant updates, retry handling, and local transcript restore
 - `backend/`: a FastAPI service that brokers every chat turn through the OpenAI Agents SDK
 - `shared/openapi.json`: exported API contract from FastAPI
+- `shared/chat-stream-contract.json`: documented SSE event contract
 - `docs/`: architecture notes and the frontend design brief
 
 ## Architecture
@@ -16,6 +17,7 @@ The public API stays deliberately small:
 - `POST /api/chat`
 - `POST /api/chat/stream`
 - `GET /api/health`
+- `GET /api/conversations/{conversation_id}`
 
 The frontend stays generic. Agent behavior is configured server-side through YAML plus small Python registries for:
 
@@ -27,6 +29,8 @@ The frontend stays generic. Agent behavior is configured server-side through YAM
 - MCP servers and hosted MCP tools
 
 That keeps the iOS app stable while the backend agent wiring evolves.
+
+At startup, the backend now validates and builds the full configured agent graph once. That catches bad tool ids, guardrail ids, handoff references, missing instruction files, and invalid model settings before traffic hits the service.
 
 ## Backend Setup
 
@@ -43,6 +47,11 @@ Steps:
 3. Fill in `OPENAI_API_KEY` in `backend/.env`
 4. `uv sync --extra dev`
 5. `uv run uvicorn app.main:app --reload`
+
+Important defaults:
+
+- `CHAT_TEMPLATE_SESSION_HISTORY_LIMIT=40` caps backend session retrieval
+- `ChatLocalTranscriptLimit=40` caps the persisted iOS transcript snapshot
 
 Health check:
 
@@ -72,6 +81,7 @@ Notes:
 
 - That works for simulator-based local development.
 - For a physical device, replace `ChatBackendBaseURL` with a reachable host IP or tunnel.
+- On launch, the app validates any restored `conversation_id` against the backend before reusing it.
 
 ## Customizing Agents
 
@@ -98,6 +108,12 @@ MCP examples are included in:
 - [mcp-http.example.yaml](./backend/config/agents/examples/mcp-http.example.yaml)
 - [hosted-mcp-tool.example.yaml](./backend/config/agents/examples/hosted-mcp-tool.example.yaml)
 
+Shared stream contract artifacts are exported to:
+
+- [openapi.json](./shared/openapi.json)
+- [chat-stream-contract.json](./shared/chat-stream-contract.json)
+- [chat-stream-fixture.sse](./shared/chat-stream-fixture.sse)
+
 ## Verification
 
 Completed in this environment:
@@ -106,13 +122,19 @@ Completed in this environment:
 - `uv run pytest`
 - `uv run python scripts/export_openapi.py`
 - direct constructor validation for SDK MCP server adapters
+- JSON/plist/Xcode metadata validation
 
 Not completed in this environment:
 
 - Xcode build
 - iOS simulator run
+- `swift test --package-path ios`
 
 This session ran on Windows without the Apple toolchain, so the iOS project is scaffolded and documented but not compiled here.
+
+Machine-checked macOS verification is included in:
+
+- [.github/workflows/ios-smoke.yml](./.github/workflows/ios-smoke.yml)
 
 ## Repository Layout
 
@@ -125,5 +147,7 @@ This session ran on Windows without the Apple toolchain, so the iOS project is s
 
 - The API contract is intentionally chat-shaped instead of mirroring the full Agents SDK surface.
 - The default session strategy is `SQLiteSession`, so the backend preserves turn state without asking the client to resend transcript history.
+- The backend validates agent configuration at startup and reuses the built agent graph across requests, including MCP connection scope.
+- The iOS app clears stale local transcript state if the backend cannot confirm the saved conversation still exists.
 - Guardrails ship as deterministic examples to keep the starter template cheap and legible.
 - MCP support is implemented and documented, but disabled by default until a developer supplies a concrete server.

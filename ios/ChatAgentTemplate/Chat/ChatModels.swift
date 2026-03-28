@@ -1,11 +1,11 @@
 import Foundation
 
-enum ChatRole: String, Codable {
+enum ChatRole: String, Codable, Equatable {
     case user
     case assistant
 }
 
-enum ChatMessageState: String, Codable {
+enum ChatMessageState: String, Codable, Equatable {
     case complete
     case streaming
     case failed
@@ -33,7 +33,7 @@ struct ChatMessage: Identifiable, Codable, Equatable {
     }
 }
 
-struct ConversationSnapshot: Codable {
+struct ConversationSnapshot: Codable, Equatable {
     var conversationID: String?
     var activeAgentName: String
     var messages: [ChatMessage]
@@ -51,21 +51,23 @@ struct BackendChatRequest: Encodable {
     }
 }
 
-struct ConversationStartedPayload: Decodable {
+struct ConversationStartedPayload: Decodable, Equatable {
     let conversationID: String
     let agentID: String
+    let sessionHistoryLimit: Int
 
     enum CodingKeys: String, CodingKey {
         case conversationID = "conversation_id"
         case agentID = "agent_id"
+        case sessionHistoryLimit = "session_history_limit"
     }
 }
 
-struct MessageDeltaPayload: Decodable {
+struct MessageDeltaPayload: Decodable, Equatable {
     let delta: String
 }
 
-struct AgentUpdatedPayload: Decodable {
+struct AgentUpdatedPayload: Decodable, Equatable {
     let agentName: String
 
     enum CodingKeys: String, CodingKey {
@@ -73,7 +75,7 @@ struct AgentUpdatedPayload: Decodable {
     }
 }
 
-struct RunItemPayload: Decodable {
+struct RunItemPayload: Decodable, Equatable {
     let name: String
     let itemType: String
 
@@ -83,12 +85,13 @@ struct RunItemPayload: Decodable {
     }
 }
 
-struct MessageCompletedPayload: Decodable {
+struct MessageCompletedPayload: Decodable, Equatable {
     let conversationID: String
     let agentID: String
     let finalAgentName: String
     let responseID: String?
     let content: String
+    let sessionHistoryLimit: Int
 
     enum CodingKeys: String, CodingKey {
         case conversationID = "conversation_id"
@@ -96,15 +99,28 @@ struct MessageCompletedPayload: Decodable {
         case finalAgentName = "final_agent_name"
         case responseID = "response_id"
         case content
+        case sessionHistoryLimit = "session_history_limit"
     }
 }
 
-struct StreamErrorPayload: Decodable {
+struct StreamErrorPayload: Decodable, Equatable {
     let code: String
     let message: String
 }
 
-enum ChatStreamEvent {
+struct ConversationStatusPayload: Decodable, Equatable {
+    let conversationID: String
+    let exists: Bool
+    let sessionHistoryLimit: Int
+
+    enum CodingKeys: String, CodingKey {
+        case conversationID = "conversation_id"
+        case exists
+        case sessionHistoryLimit = "session_history_limit"
+    }
+}
+
+enum ChatStreamEvent: Equatable {
     case conversationStarted(ConversationStartedPayload)
     case messageDelta(MessageDeltaPayload)
     case agentUpdated(AgentUpdatedPayload)

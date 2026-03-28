@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import OSLog
 
 @MainActor
 @Observable
@@ -10,25 +11,32 @@ final class ChatSessionStore {
     var activeAgentName = "Assistant"
     var inlineError: String?
     var isStreaming = false
+    var persistenceIssue: String?
 
     private let client: any ChatAPIClient
     private let transcriptStore: TranscriptStore
     private let backendBaseURL: URL
     private let defaultAgentID: String
+    private let logger = Logger(subsystem: "ChatAgentTemplate", category: "ChatSessionStore")
     private var sendTask: Task<Void, Never>?
+    private var persistenceTask: Task<Void, Never>?
     private var pendingRetryMessage: String?
     private var hasRestoredSnapshot = false
+    private var transcriptLimit: Int
+    private var persistenceRevision = 0
 
     init(
         client: any ChatAPIClient,
         transcriptStore: TranscriptStore,
         backendBaseURL: URL,
-        defaultAgentID: String
+        defaultAgentID: String,
+        localTranscriptLimit: Int
     ) {
         self.client = client
         self.transcriptStore = transcriptStore
         self.backendBaseURL = backendBaseURL
         self.defaultAgentID = defaultAgentID
+        self.transcriptLimit = max(1, localTranscriptLimit)
     }
 
     var canSendMessage: Bool {
@@ -55,11 +63,24 @@ final class ChatSessionStore {
 
         do {
             guard let snapshot = try await transcriptStore.load() else { return }
+            if let snapshotConversationID = snapshot.conversationID {
+                let status = try await client.conversationStatus(for: snapshotConversationID)
+                transcriptLimit = max(1, status.sessionHistoryLimit)
+                guard status.exists else {
+                    inlineError = "The previous backend session is no longer available. Starting a new conversation."
+                    resetConversationState()
+                    schedulePersistence()
+                    return
+                }
+            }
+
             conversationID = snapshot.conversationID
             activeAgentName = snapshot.activeAgentName
-            messages = snapshot.messages
+            messages = cappedMessages(snapshot.messages)
         } catch {
-            inlineError = "Couldn't restore the previous conversation."
+            inlineError = "Couldn't verify the previous backend session. Starting a new conversation."
+            resetConversationState()
+            schedulePersistence()
         }
     }
 
@@ -82,10 +103,8 @@ final class ChatSessionStore {
         isStreaming = false
         pendingRetryMessage = nil
         inlineError = nil
-        conversationID = nil
-        activeAgentName = "Assistant"
-        messages.removeAll(keepingCapacity: true)
-        persistSnapshot()
+        resetConversationState()
+        schedulePersistence()
     }
 
     func useSuggestion(_ prompt: String) {
@@ -104,8 +123,8 @@ final class ChatSessionStore {
         }
 
         let assistantID = UUID()
-        messages.append(ChatMessage(role: .assistant, text: "", state: .streaming))
-        persistSnapshot()
+        messages.append(ChatMessage(id: assistantID, role: .assistant, text: "", state: .streaming))
+        schedulePersistence()
 
         sendTask = Task { [weak self] in
             guard let self else { return }
@@ -123,10 +142,10 @@ final class ChatSessionStore {
                 }
                 self.pendingRetryMessage = nil
                 self.isStreaming = false
-                self.persistSnapshot()
+                self.schedulePersistence()
             } catch is CancellationError {
                 self.isStreaming = false
-                self.persistSnapshot()
+                self.schedulePersistence()
             } catch {
                 self.isStreaming = false
                 self.inlineError = error.localizedDescription
@@ -137,7 +156,7 @@ final class ChatSessionStore {
                         self.messages[index].state = .failed
                     }
                 }
-                self.persistSnapshot()
+                self.schedulePersistence()
             }
         }
     }
@@ -146,6 +165,7 @@ final class ChatSessionStore {
         switch event {
         case .conversationStarted(let payload):
             conversationID = payload.conversationID
+            transcriptLimit = max(1, payload.sessionHistoryLimit)
         case .messageDelta(let payload):
             if let index = messages.firstIndex(where: { $0.id == assistantMessageID }) {
                 messages[index].text += payload.delta
@@ -160,6 +180,7 @@ final class ChatSessionStore {
         case .messageCompleted(let payload):
             conversationID = payload.conversationID
             activeAgentName = payload.finalAgentName
+            transcriptLimit = max(1, payload.sessionHistoryLimit)
             if let index = messages.firstIndex(where: { $0.id == assistantMessageID }) {
                 messages[index].text = payload.content
                 messages[index].state = .complete
@@ -171,28 +192,56 @@ final class ChatSessionStore {
         }
     }
 
-    private func persistSnapshot() {
-        let snapshot = ConversationSnapshot(
-            conversationID: conversationID,
-            activeAgentName: activeAgentName,
-            messages: messages
-        )
+    private func schedulePersistence() {
+        persistenceRevision += 1
+        let revision = persistenceRevision
+        let snapshotMessages = cappedMessages(messages)
+        let snapshot = snapshotMessages.isEmpty
+            ? nil
+            : ConversationSnapshot(
+                conversationID: conversationID,
+                activeAgentName: activeAgentName,
+                messages: snapshotMessages
+            )
 
-        Task {
+        persistenceTask?.cancel()
+        persistenceTask = Task { [weak self, transcriptStore, logger] in
             do {
-                if snapshot.messages.isEmpty {
-                    try await transcriptStore.clear()
-                } else {
-                    try await transcriptStore.save(snapshot)
+                try await transcriptStore.replace(snapshot: snapshot, revision: revision)
+                await MainActor.run {
+                    self?.persistenceIssue = nil
                 }
+            } catch is CancellationError {
+                return
             } catch {
-                // Persistence is best effort for the template.
+                logger.error("Transcript persistence failed: \(error.localizedDescription, privacy: .public)")
+                await MainActor.run {
+                    self?.persistenceIssue = "Transcript persistence failed."
+                }
             }
         }
+    }
+
+    private func cappedMessages(_ source: [ChatMessage]) -> [ChatMessage] {
+        Array(source.suffix(transcriptLimit))
+    }
+
+    private func resetConversationState() {
+        conversationID = nil
+        activeAgentName = "Assistant"
+        messages.removeAll(keepingCapacity: true)
     }
 }
 
 private struct PreviewChatAPIClient: ChatAPIClient {
+    func conversationStatus(for conversationID: String) async throws -> ConversationStatusPayload {
+        ConversationStatusPayload(
+            conversationID: conversationID,
+            exists: true,
+            sessionHistoryLimit: 40
+        )
+    }
+
     func streamReply(for request: BackendChatRequest) -> AsyncThrowingStream<ChatStreamEvent, Error> {
         AsyncThrowingStream { continuation in
             continuation.finish()
@@ -206,7 +255,8 @@ extension ChatSessionStore {
             client: PreviewChatAPIClient(),
             transcriptStore: .preview(),
             backendBaseURL: URL(string: "http://127.0.0.1:8000")!,
-            defaultAgentID: "default"
+            defaultAgentID: "default",
+            localTranscriptLimit: 40
         )
         store.messages = [
             ChatMessage(role: .assistant, text: "How can I help today?"),
@@ -227,7 +277,8 @@ extension ChatSessionStore {
             client: PreviewChatAPIClient(),
             transcriptStore: .preview(),
             backendBaseURL: URL(string: "http://127.0.0.1:8000")!,
-            defaultAgentID: "default"
+            defaultAgentID: "default",
+            localTranscriptLimit: 40
         )
     }
 
