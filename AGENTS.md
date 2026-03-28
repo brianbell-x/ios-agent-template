@@ -103,12 +103,13 @@ It must provide:
 
 ## Workflow Expectations
 
-- Build in small, coherent steps.
+- Build in small, coherent steps. 
 - Keep the project runnable as work progresses. Avoid large unverified changesets.
 - Commit changes as meaningful milestones are completed.
 - Use the `$review-engineering-decisions` skill to review important commits as work progresses.
 - Treat review findings seriously and keep the architecture tidy.
-- Do not leave the repo in a half-finished state if a milestone can be completed in the current session.
+- Do not leave the repo in a half-finished state.  a milestone can be completed in the current session, complete it.
+- I won't be around to help you with this project, so you need to be able to complete the project on your own. I'll be asleep.
 
 ## Definition of Done
 
